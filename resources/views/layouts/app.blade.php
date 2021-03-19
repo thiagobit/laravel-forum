@@ -50,7 +50,7 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                @foreach(\App\Models\Channel::all() as $channel)
+                                @foreach($channels as $channel)
                                 <a class="dropdown-item" href="{{ route('channels.index', $channel) }}">{{ $channel->name }}</a>
                                 @endforeach
                             </div>
