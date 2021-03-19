@@ -33,7 +33,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-link"><a href="{{ route('threads.index') }}">All Threads</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Threads
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('threads.create') }}">New Thread</a>
+                                <a class="dropdown-item" href="{{ route('threads.index') }}">All Threads</a>
+                            </div>
+                        </li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,7 +53,6 @@
                                 @foreach(\App\Models\Channel::all() as $channel)
                                 <a class="dropdown-item" href="{{ route('channels.index', $channel) }}">{{ $channel->name }}</a>
                                 @endforeach
-
                             </div>
                         </li>
                     </ul>

@@ -21,9 +21,11 @@ class ChannelFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->word;
+
         return [
-            'name' => $this->faker->word,
-            'slug' => $this->faker->word
+            'name' => $name,
+            'slug' => $name
         ];
     }
 }
