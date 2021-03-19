@@ -16,6 +16,11 @@ class Thread extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
+    }
+
     public function replies()
     {
         return $this->hasMany(Reply::class);
@@ -26,8 +31,8 @@ class Thread extends Model
         $this->replies()->create($reply);
     }
 
-    public function channel()
+    public function scopeFilter($query, $filters)
     {
-        return $this->belongsTo(Channel::class);
+        return $filters->apply($query);
     }
 }

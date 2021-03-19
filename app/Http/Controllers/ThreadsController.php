@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ThreadFilters;
 use App\Models\Channel;
 use App\Models\Thread;
 use App\Models\User;
@@ -17,23 +18,13 @@ class ThreadsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Channel $channel
+     * @param ThreadFilters $filters
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(Channel $channel)
+    public function index(Channel $channel, ThreadFilters $filters)
     {
-        if ($channel->exists) {
-            $threads = $channel->threads()->latest();
-        } else {
-            $threads = Thread::latest();
-        }
-
-        if ($username = request('by')) {
-            $user = User::where('name', $username)->firstOrFail();
-
-            $threads->where('user_id', $user->id);
-        }
-
-        $threads = $threads->get();
+        $threads = $this->getThreads($filters, $channel);
 
         return view('threads.index', compact('threads'));
     }
@@ -116,5 +107,19 @@ class ThreadsController extends Controller
     public function destroy(Thread $thread)
     {
         //
+    }
+
+    /**
+     * @param ThreadFilters $filters
+     * @param Channel $channel
+     * @return mixed
+     */
+    protected function getThreads(ThreadFilters $filters, Channel $channel): mixed
+    {
+        $threads = Thread::latest()->filter($filters);
+
+        if ($channel->exists) $threads->where('channel_id', $channel->id);
+
+        return $threads->get();
     }
 }
