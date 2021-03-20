@@ -29,3 +29,4 @@ Route::get('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsControlle
 Route::post('/threads', [App\Http\Controllers\ThreadsController::class, 'store'])->name('threads.store');
 
 Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\RepliesController::class, 'store'])->name('replies.store');
+Route::post('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store'])->name('replies.favorites');
