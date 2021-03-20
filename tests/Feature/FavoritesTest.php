@@ -34,8 +34,12 @@ class FavoritesTest extends DatabaseTestCase
 
         $reply = create('App\Models\Reply');
 
-        $this->post(route('replies.favorites', $reply));
-        $this->post(route('replies.favorites', $reply));
+        try {
+            $this->post(route('replies.favorites', $reply));
+            $this->post(route('replies.favorites', $reply));
+        } catch (\Exception $e) {
+            $this->fail('Did not expect to insert the same record set twice.');
+        }
 
         $this->assertCount(1, $reply->favorites);
     }

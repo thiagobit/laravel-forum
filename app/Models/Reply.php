@@ -31,4 +31,9 @@ class Reply extends Model
 
         return false;
     }
+
+    public function isFavorited()
+    {
+        return $this->favorites()->where('user_id', auth()->id())->exists();
+    }
 }
