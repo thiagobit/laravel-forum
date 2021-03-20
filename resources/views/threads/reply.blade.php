@@ -10,7 +10,7 @@
                     @csrf
 
                     <button class="btn btn-outline-secondary" type="submit" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                        {{ $reply->favorites()->count() }} {{ \Illuminate\Support\Str::plural('Favorite', $reply->favorites()->count()) }}
+                        {{ $reply->favorites_count }} {{ \Illuminate\Support\Str::plural('Favorite', $reply->favorites_count) }}
                     </button>
                 </form>
             </div>
