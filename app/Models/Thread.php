@@ -9,23 +9,25 @@ class Thread extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected array $guarded = [];
 
-    protected $withCount = ['replies'];
+    protected array $with = ['creator', 'channel'];
 
-    public function creator()
+    protected array $withCount = ['replies'];
+
+    public function creator(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function channel()
+    public function channel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Channel::class);
     }
 
-    public function replies()
+    public function replies(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Reply::class)->with('owner')->withCount('favorites');
+        return $this->hasMany(Reply::class)->with('owner');
     }
 
     public function addReply($reply)

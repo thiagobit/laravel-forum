@@ -9,12 +9,12 @@ class Channel extends Model
 {
     use HasFactory;
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public function threads()
+    public function threads(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Thread::class);
     }

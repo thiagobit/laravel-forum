@@ -9,5 +9,5 @@ class Favorite extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected array $guarded = [];
 }
