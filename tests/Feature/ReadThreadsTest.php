@@ -44,7 +44,7 @@ class ReadThreadsTest extends DatabaseTestCase
         $channel = create('App\Models\Channel');
 
         $threadInChannel = create('App\Models\Thread', ['channel_id' => $channel->id]);
-        $threadNotInChannel = create('App\Models\Thread');
+        $threadNotInChannel = $this->thread;
 
         $this->get(route('channels.index', [$channel]))
             ->assertSee($threadInChannel->title)
@@ -52,16 +52,36 @@ class ReadThreadsTest extends DatabaseTestCase
     }
 
     /** @test */
-    function an_user_can_filter_threads_by_any_username(){
+    function an_user_can_filter_threads_by_any_username()
+    {
         $userName = 'JohnDoe';
 
         $this->signIn(create('App\Models\User', ['name' => $userName]));
 
         $threadByJohn = create('App\Models\Thread', ['user_id' => auth()->id()]);
-        $threadNotByJohn = create('App\Models\Thread');
+        $threadNotByJohn = $this->thread;
 
         $this->get('threads/?by=' . $userName)
             ->assertSee($threadByJohn->title)
             ->assertDontSee($threadNotByJohn->title);
+    }
+
+    /** @test */
+    function an_user_can_filter_threads_by_popularity()
+    {
+        $threadWithZeroReplies = $this->thread;
+
+        $threadWithTwoReplies = create('App\Models\Thread');
+        create('App\Models\Reply', ['thread_id' => $threadWithTwoReplies->id], 2);
+
+        $threadWithThreeReplies = create('App\Models\Thread');
+        create('App\Models\Reply', ['thread_id' => $threadWithThreeReplies->id], 3);
+
+        $this->get('threads?popular=1')
+            ->assertSeeInOrder([
+                $threadWithThreeReplies->title,
+                $threadWithTwoReplies->title,
+                $threadWithZeroReplies->title
+            ]);
     }
 }
