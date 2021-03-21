@@ -9,6 +9,8 @@ class Channel extends Model
 {
     use HasFactory;
 
+    protected array $guarded = [];
+
     public function getRouteKeyName(): string
     {
         return 'slug';
