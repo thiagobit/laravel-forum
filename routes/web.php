@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\ProfilesController;
+use App\Http\Controllers\RepliesController;
+use App\Http\Controllers\ThreadsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,14 +25,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//Route::resource('threads', App\Http\Controllers\ThreadsController::class);
-Route::get('/threads', [App\Http\Controllers\ThreadsController::class, 'index'])->name('threads.index');
-Route::get('/threads/create', [App\Http\Controllers\ThreadsController::class, 'create'])->name('threads.create');
-Route::get('/threads/{channel}', [App\Http\Controllers\ThreadsController::class, 'index'])->name('channels.index');
-Route::get('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'show'])->name('threads.show');
-Route::post('/threads', [App\Http\Controllers\ThreadsController::class, 'store'])->name('threads.store');
+//Route::resource('threads', ThreadsController::class);
+Route::get('/threads', [ThreadsController::class, 'index'])->name('threads.index');
+Route::get('/threads/create', [ThreadsController::class, 'create'])->name('threads.create');
+Route::get('/threads/{channel}', [ThreadsController::class, 'index'])->name('channels.index');
+Route::get('/threads/{channel}/{thread}', [ThreadsController::class, 'show'])->name('threads.show');
+Route::post('/threads', [ThreadsController::class, 'store'])->name('threads.store');
+Route::delete('/threads/{channel}/{thread}', [ThreadsController::class, 'destroy'])->name('threads.destroy');
 
-Route::post('/threads/{channel}/{thread}/replies', [App\Http\Controllers\RepliesController::class, 'store'])->name('replies.store');
-Route::post('/replies/{reply}/favorites', [App\Http\Controllers\FavoritesController::class, 'store'])->name('replies.favorites');
+Route::post('/threads/{channel}/{thread}/replies', [RepliesController::class, 'store'])->name('replies.store');
+Route::post('/replies/{reply}/favorites', [FavoritesController::class, 'store'])->name('replies.favorites');
 
-Route::get('/profiles/{user}', [\App\Http\Controllers\ProfilesController::class, 'show'])->name('profiles.show');
+Route::get('/profiles/{user}', [ProfilesController::class, 'show'])->name('profiles.show');

@@ -6,8 +6,21 @@
             <div class="col-md-8 mb-md-4">
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{ route('profiles.show', $thread->creator) }}">{{ $thread->creator->name }}</a> posted:
-                        {{ $thread->title }}
+                        <div class="level">
+                            <span class="flex">
+                                <a href="{{ route('profiles.show', $thread->creator) }}">{{ $thread->creator->name }}</a> posted:
+                                {{ $thread->title }}
+                            </span>
+
+                            @if (Auth::check())
+                            <form method="POST" action="{{ route('threads.destroy', [$thread->channel, $thread]) }}">
+                                @csrf
+                                @method('DELETE')
+
+                                <button class="btn btn-link" type="submit">Delete Thread</button>
+                            </form>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="card-body">

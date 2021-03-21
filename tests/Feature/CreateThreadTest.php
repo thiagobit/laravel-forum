@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Support\Facades\DB;
 use Tests\DatabaseTestCase;
 
 class CreateThreadTest extends DatabaseTestCase
@@ -58,7 +59,47 @@ class CreateThreadTest extends DatabaseTestCase
             ->assertSessionHasErrors('channel_id');
     }
 
-    public function publishThread($overrides = [])
+    /** @test */
+    function guests_cannot_delete_threads()
+    {
+        $thread = create('App\Models\Thread');
+
+        $this->delete(route('threads.destroy', [$thread->channel, $thread]))
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
+    function a_thread_can_be_deleted()
+    {
+        $user = create('App\Models\User');
+
+        $this->signIn($user);
+
+        $thread = create('App\Models\Thread', ['user_id' => $user->id]);
+
+        //$this->delete(route('threads.destroy', [$thread->channel, $thread]))
+        $this->json('DELETE', route('threads.destroy', [$thread->channel, $thread]))
+            ->assertSuccessful();
+
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+
+        $this->get(route('threads.show', [$thread->channel, $thread]))
+            ->assertNotFound();
+
+        $this->get(route('threads.index', $thread))
+            ->assertDontSee($thread->title);
+
+        $this->get(route('profiles.show', $user))
+            ->assertDontSee($thread->title);
+    }
+
+//    /** @test */
+//    function thread_con_only_be_deleted_by_those_who_have_permission()
+//    {
+//
+//    }
+
+    private function publishThread($overrides = [])
     {
         $this->signIn();
 
