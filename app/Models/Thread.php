@@ -7,13 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordsActivity;
 
     protected array $guarded = [];
 
     protected array $with = ['creator', 'channel'];
 
     protected array $withCount = ['replies'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($thread) {
+            $thread->replies()->delete();
+        });
+    }
 
     public function creator(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
