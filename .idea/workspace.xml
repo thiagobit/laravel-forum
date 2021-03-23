@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="67203c69-1e2a-4853-b54d-1a15247dbc9e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProfilesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProfilesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ThreadsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ThreadsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Activity.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Activity.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/RecordsActivity.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/RecordsActivity.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Thread.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Thread.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/profiles/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/profiles/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/CreateThreadTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CreateThreadTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ProfilesTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ProfilesTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/ActivityTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/ActivityTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +211,7 @@
       <workItem from="1616375250210" duration="83000" />
       <workItem from="1616436554522" duration="452000" />
       <workItem from="1616437046695" duration="4086000" />
-      <workItem from="1616513942203" duration="5496000" />
+      <workItem from="1616513942203" duration="5643000" />
     </task>
     <servers />
   </component>

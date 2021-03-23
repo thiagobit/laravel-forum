@@ -13,9 +13,7 @@
                 @foreach($activities as $date => $activity)
                     <h3 class="pb-2 mt-4 mb-4 border-bottom">{{ $date }}</h3>
                     @foreach ($activity as $record)
-                        @if($record->subject)
-                            @include("profiles.activities.{$record->type}", ['activity' => $record])
-                        @endif
+                        @include("profiles.activities.{$record->type}", ['activity' => $record])
                     @endforeach
                 @endforeach
 
