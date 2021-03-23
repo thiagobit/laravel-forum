@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Activity;
 use Illuminate\Support\Facades\DB;
 use Tests\DatabaseTestCase;
 
@@ -79,20 +80,26 @@ class CreateThreadTest extends DatabaseTestCase
         $this->signIn();
 
         $thread = create('App\Models\Thread', ['user_id' => auth()->id()]);
+        $reply = create('App\Models\Reply', ['thread_id' => $thread->id]);
 
         $this->json('DELETE', route('threads.destroy', [$thread->channel, $thread]))
             ->assertSuccessful();
 
-        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('threads', $thread->toArray());
+        $this->assertDatabaseMissing('replies', $reply->toArray());
+        $this->assertEquals(0, Activity::count());
 
+        /*
         $this->get(route('threads.show', [$thread->channel, $thread]))
             ->assertNotFound();
 
         $this->get(route('threads.index', $thread))
             ->assertDontSee($thread->title);
 
+        $this->withoutExceptionHandling();
         $this->get(route('profiles.show', auth()->user()))
             ->assertDontSee($thread->title);
+        */
     }
 
     private function publishThread($overrides = [])

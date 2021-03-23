@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Activity;
+use App\Models\Thread;
 use Tests\DatabaseTestCase;
 
 class ProfilesTest extends DatabaseTestCase
@@ -18,11 +20,11 @@ class ProfilesTest extends DatabaseTestCase
     /** @test */
     function profiles_displays_all_threads_created_by_associated_user()
     {
-        $user = create('App\Models\User');
+        $this->signIn();
 
-        $thread = create('App\Models\Thread', ['user_id' => $user->id]);
+        $thread = create('App\Models\Thread', ['user_id' => auth()->id()]);
 
-        $this->get(route('profiles.show', $user->name))
+        $this->get(route('profiles.show', auth()->user()->name))
             ->assertSee($thread->title)
             ->assertSee($thread->body);
     }

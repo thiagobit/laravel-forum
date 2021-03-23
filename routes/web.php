@@ -17,11 +17,11 @@ use App\Http\Controllers\ThreadsController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () { return view('welcome'); });
 
 Auth::routes();
+
+Route::get('/', [ThreadsController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

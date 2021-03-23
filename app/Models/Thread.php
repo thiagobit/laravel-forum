@@ -19,8 +19,9 @@ class Thread extends Model
     {
         parent::boot();
 
+        // implemented this way to call bootRecordsActivity() also for replies
         static::deleting(function ($thread) {
-            $thread->replies()->delete();
+            $thread->replies->each->delete();
         });
     }
 
