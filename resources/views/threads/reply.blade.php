@@ -1,4 +1,4 @@
-<div class="card mt-md-4">
+<div id="reply-{{ $reply->id }}" class="card mt-md-4">
     <div class="card-header">
         <div class="level">
             <h5 class="flex">
