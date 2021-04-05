@@ -13,6 +13,15 @@ class Reply extends Model
 
     protected array $with = ['owner', 'favorites'];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($reply) {
+            $reply->favorites->each->delete();
+        });
+    }
+
     public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
