@@ -38,4 +38,29 @@ class ParticipateInForumTest extends DatabaseTestCase
         $this->post(route('replies.store', [$thread->channel, $thread]), $reply->toArray())
             ->assertSessionHasErrors('body');
     }
+
+    /** @test */
+    public function unauthorized_users_cannot_delete_replies()
+    {
+        $reply = create('App\Models\Reply');
+
+        $this->delete(route('replies.destroy', $reply))
+            ->assertRedirect('login');
+
+        $this->signIn()
+            ->delete(route('replies.destroy', $reply))
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_users_can_delete_replies()
+    {
+        $this->signIn();
+
+        $reply = create('App\Models\Reply', ['user_id' => auth()->id()]);
+
+        $this->delete(route('replies.destroy', $reply));
+
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
 }
