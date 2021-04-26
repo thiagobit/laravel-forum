@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\DatabaseTestCase;
 
-class ParticipateInForumTest extends DatabaseTestCase
+class ParticipateInThreadsTest extends DatabaseTestCase
 {
     /** @test */
     function unauthenticated_users_may_not_add_replies()
@@ -62,5 +62,31 @@ class ParticipateInForumTest extends DatabaseTestCase
         $this->delete(route('replies.destroy', $reply));
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
+
+    /** @test */
+    public function unauthorized_users_cannot_update_replies()
+    {
+        $reply = create('App\Models\Reply');
+
+        $this->patch(route('replies.update', $reply))
+            ->assertRedirect('login');
+
+        $this->signIn()
+            ->patch(route('replies.update', $reply))
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_users_can_update_replies()
+    {
+        $this->signIn();
+
+        $reply = create('App\Models\Reply', ['user_id' => auth()->id()]);
+
+        $updatedReply = 'You benn changed, fool.';
+        $response = $this->patch(route('replies.update', $reply), ['body' => $updatedReply]);
+
+        $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedReply]);
     }
 }
